@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -16,4 +17,6 @@ public class Task {
 	private Long id;
 	private String description;
 	private boolean done;
+	private String priority;
+	private Date deadline;
 }

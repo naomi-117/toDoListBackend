@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,15 +28,30 @@ public class TodolistController {
         return new ResponseEntity<>(allTasks, HttpStatus.OK);
     }
 
-    //@GetMapping("/{description}")
-    // public ResponseEntity<Todolist> findByDescription(@PathVariable String description){
-    //     Todolist todolist = todolistService.findByDescription(description);
-    //     return ResponseEntity.ok(todolist);
-    //}
-
     @PostMapping
     public ResponseEntity<Task> addTask(@RequestBody TaskDto taskDto){
         Task addedTask = todolistService.addTask(taskDto);
         return new ResponseEntity<>(addedTask, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable("id") Long taskId, @RequestBody TaskDto taskDto) {
+        Task updatedTask = todolistService.updateTask(taskId, taskDto);
+        if (updatedTask != null) {
+            return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable("id") Long taskId) {
+        Task existingTask = todolistService.getTask(taskId);
+        if (existingTask != null) {
+            todolistService.deleteTask(taskId);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

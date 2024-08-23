@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TodolistRepository extends JpaRepository<Task, Long> {
-    //Task getTask(String description);
+
 }
