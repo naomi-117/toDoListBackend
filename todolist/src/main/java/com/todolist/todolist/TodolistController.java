@@ -1,7 +1,6 @@
 package com.todolist.todolist;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +24,13 @@ public class TodolistController {
     @GetMapping
     public ResponseEntity<List<Task>> findAll(){
         List<Task> allTasks = todolistService.findAll();
+        allTasks.forEach(task -> System.out.println("Task: " + task.getDescription() + ", Priority: " + task.getPriority()));
         return new ResponseEntity<>(allTasks, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Task> addTask(@RequestBody TaskDto taskDto){
+        System.out.println("Received Task: " + taskDto.getDescription() + ", Priority: " + taskDto.getPriority());
         Task addedTask = todolistService.addTask(taskDto);
         return new ResponseEntity<>(addedTask, HttpStatus.CREATED);
     }
