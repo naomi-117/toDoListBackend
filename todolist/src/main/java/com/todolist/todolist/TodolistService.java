@@ -36,6 +36,10 @@ public class TodolistService {
         todolistRepository.deleteById(taskId);
     }
 
+    public void deleteAllTasks() {
+        todolistRepository.deleteAll();
+    }
+
     // Update a task by ID
     public Task updateTask(Long taskId, TaskDto taskDto) {
         Task task = getTask(taskId);

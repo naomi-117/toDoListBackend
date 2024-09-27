@@ -55,4 +55,11 @@ public class TodolistController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllTasks() {
+        todolistService.deleteAllTasks();
+        return ResponseEntity.noContent().build();
+    
+    }
 }
